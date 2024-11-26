@@ -1,39 +1,23 @@
-<<<<<<< HEAD
+
 # DiffMesh
 =======
-# MotionBERT
 
-<a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a> [![arXiv](https://img.shields.io/badge/arXiv-2210.06551-b31b1b.svg)](https://arxiv.org/abs/2210.06551) <a href="https://motionbert.github.io/"><img alt="Project" src="https://img.shields.io/badge/-Project%20Page-lightgrey?logo=Google%20Chrome&color=informational&logoColor=white"></a> <a href="https://youtu.be/slSPQ9hNLjM"><img alt="Demo" src="https://img.shields.io/badge/-Demo-ea3323?logo=youtube"></a> 
+[![arXiv](https://img.shields.io/badge/arXiv-2210.06551-b31b1b.svg)](https://arxiv.org/pdf/2303.13397) <a href="https://zczcwh.github.io/diffmesh_page/"><img alt="Project" src="https://img.shields.io/badge/-Project%20Page-lightgrey?logo=Google%20Chrome&color=informational&logoColor=white"></a> 
 
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/motionbert-unified-pretraining-for-human/monocular-3d-human-pose-estimation-on-human3)](https://paperswithcode.com/sota/monocular-3d-human-pose-estimation-on-human3?p=motionbert-unified-pretraining-for-human)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/motionbert-unified-pretraining-for-human/one-shot-3d-action-recognition-on-ntu-rgbd)](https://paperswithcode.com/sota/one-shot-3d-action-recognition-on-ntu-rgbd?p=motionbert-unified-pretraining-for-human)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/motionbert-unified-pretraining-for-human/3d-human-pose-estimation-on-3dpw)](https://paperswithcode.com/sota/3d-human-pose-estimation-on-3dpw?p=motionbert-unified-pretraining-for-human)
+This is the official PyTorch implementation of the paper *"[DiffMesh: A Motion-aware Diffusion Framework for Human Mesh Recovery from Videos](https://arxiv.org/pdf/2303.13397.pdf)"*.
 
-This is the official PyTorch implementation of the paper *"[Learning Human Motion Representations: A Unified Perspective](https://arxiv.org/pdf/2210.06551.pdf)"*.
 
-<img src="https://motionbert.github.io/assets/teaser.gif" alt="" style="zoom: 60%;" />
 
 ## Installation
+Please follow [MotionBert](https://github.com/Walter0807/MotionBERT) to prepare env and data. 
 
 ```bash
-conda create -n motionbert python=3.7 anaconda
-conda activate motionbert
+conda create -n diffmesh python=3.7 anaconda
+conda activate diffmesh
 # Please install PyTorch according to your CUDA version.
 conda install pytorch torchvision torchaudio pytorch-cuda=11.6 -c pytorch -c nvidia
 pip install -r requirements.txt
 ```
-
-
-
-## Getting Started
-
-| Task                              | Document                                                     |
-| --------------------------------- | ------------------------------------------------------------ |
-| Pretrain                          | [docs/pretrain.md](docs/pretrain.md)                                                          |
-| 3D human pose estimation          | [docs/pose3d.md](docs/pose3d.md) |
-| Skeleton-based action recognition | [docs/action.md](docs/action.md) |
-| Mesh recovery                     | [docs/mesh.md](docs/mesh.md) |
-
 
 
 ## Applications
@@ -90,25 +74,20 @@ In most use cases (especially with finetuning), `MotionBERT-Lite` gives a simila
 
 
 
-## TODO
-
-- [x] Scripts and docs for pretraining
-
-- [x] Demo for custom videos
-
-
 
 ## Citation
 
 If you find our work useful for your project, please consider citing the paper:
 
 ```bibtex
-@article{motionbert2022,
-  title   =   {Learning Human Motion Representations: A Unified Perspective}, 
-  author  =   {Zhu, Wentao and Ma, Xiaoxuan and Liu, Zhaoyang and Liu, Libin and Wu, Wayne and Wang, Yizhou},
-  year    =   {2022},
-  journal =   {arXiv preprint arXiv:2210.06551},
+
+Ce Zheng1, Xianpeng Liu2, Qucheng Peng3, Tianfu Wu2, Pu Wang4, Chen Chen3,
+
+@inproceedings{zheng2025diffmesh,
+  title={DiffMesh: A Motion-aware Diffusion Framework for Human Mesh Recovery from Videos},
+  author={Zheng, Ce and Liu, Xianpeng and Peng, Qucheng and Wu, Tianfu and Wang, Pu and Chen, Chen},
+  booktitle={IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) },
+  year={2025}
 }
 ```
 
->>>>>>> 217d006 (Initial commit)
