@@ -81,8 +81,6 @@ If you find our work useful for your project, please consider citing the paper:
 
 ```bibtex
 
-Ce Zheng1, Xianpeng Liu2, Qucheng Peng3, Tianfu Wu2, Pu Wang4, Chen Chen3,
-
 @inproceedings{zheng2025diffmesh,
   title={DiffMesh: A Motion-aware Diffusion Framework for Human Mesh Recovery from Videos},
   author={Zheng, Ce and Liu, Xianpeng and Peng, Qucheng and Wu, Tianfu and Wang, Pu and Chen, Chen},
