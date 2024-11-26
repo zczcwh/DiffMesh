@@ -19,61 +19,44 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.6 -c pytorch -c nvi
 pip install -r requirements.txt
 ```
 
+## Testing 
 
-## Applications
+To evaluate our model on 3DPW dataset:
+``` bash
+python train_mesh.py \
+--config configs/mesh/DM_ft_pw3d.yaml \
+--evaluate checkpoint/mesh/FT_DM_release_DM_ft_pw3d/best_epoch.bin 
+```
 
-### In-the-wild inference (for custom videos)
-
-Please refer to [docs/inference.md](docs/inference.md).
-
-### Using MotionBERT for *human-centric* video representations
-
-```python
-'''	    
-  x: 2D skeletons 
-    type = <class 'torch.Tensor'>
-    shape = [batch size * frames * joints(17) * channels(3)]
-    
-  MotionBERT: pretrained human motion encoder
-    type = <class 'lib.model.DSTformer.DSTformer'>
-    
-  E: encoded motion representation
-    type = <class 'torch.Tensor'>
-    shape = [batch size * frames * joints(17) * channels(512)]
-'''
-E = MotionBERT.get_representation(x)
+For HybrIK refinement results
+``` bash
+python train_mesh_refine.py \
+--config configs/mesh/DM_ft_pw3d_refine_hybrik.yaml \
+--evaluate checkpoint/mesh/FT_DM_release_DM_ft_pw3d_refine_hybrik/best_epoch.bin
 ```
 
 
+## Training
 
-> **Hints**
->
-> 1. The model could handle different input lengths (no more than 243 frames). No need to explicitly specify the input length elsewhere.
-> 2. The model uses 17 body keypoints ([H36M format](https://github.com/JimmySuen/integral-human-pose/blob/master/pytorch_projects/common_pytorch/dataset/hm36.py#L32)). If you are using other formats, please convert them before feeding to MotionBERT. 
-> 3. Please refer to [model_action.py](lib/model/model_action.py) and [model_mesh.py](lib/model/model_mesh.py) for examples of (easily) adapting MotionBERT to different downstream tasks.
-> 4. For RGB videos, you need to extract 2D poses ([inference.md](docs/inference.md)), convert the keypoint format ([dataset_wild.py](lib/data/dataset_wild.py)), and then feed to MotionBERT ([infer_wild.py](infer_wild.py)).
->
+To train on 3DPW dataset: 
+``` bash
+python train_mesh.py --config configs/mesh/DM_ft_pw3d.yaml --pretrained checkpoint/pretrain/MB_release --checkpoint checkpoint/mesh/FT_DM_release_DM_ft_pw3d
+```
 
+If you want to apply   HybrIK refinement
+``` bash
+python train_mesh_refine.py \
+--config configs/mesh/DM_ft_pw3d_refine_hybrik.yaml \
+--pretrained checkpoint/pretrain/MB_release \
+--checkpoint checkpoint/mesh/FT_DM_release_DM_ft_pw3d_refine_hybrik
+```
 
-
-## Model Zoo
-
-<img src="https://motionbert.github.io/assets/demo.gif" alt="" style="zoom: 50%;" />
-
-| Model                           | Download Link                                                | Config                                                       | Performance      |
-| ------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------- |
-| MotionBERT (162MB)              | [OneDrive](https://1drv.ms/f/s!AvAdh0LSjEOlgS425shtVi9e5reN?e=6UeBa2) | [pretrain/MB_pretrain.yaml](configs/pretrain/MB_pretrain.yaml) | -                |
-| MotionBERT-Lite (61MB)          | [OneDrive](https://1drv.ms/f/s!AvAdh0LSjEOlgS27Ydcbpxlkl0ng?e=rq2Btn) | [pretrain/MB_lite.yaml](configs/pretrain/MB_lite.yaml)       | -                |
-| 3D Pose (H36M-SH, scratch)      | [OneDrive](https://1drv.ms/f/s!AvAdh0LSjEOlgSvNejMQ0OHxMGZC?e=KcwBk1) | [pose3d/MB_train_h36m.yaml](configs/pose3d/MB_train_h36m.yaml) | 39.2mm (MPJPE)   |
-| 3D Pose (H36M-SH, ft)           | [OneDrive](https://1drv.ms/f/s!AvAdh0LSjEOlgSoTqtyR5Zsgi8_Z?e=rn4VJf) | [pose3d/MB_ft_h36m.yaml](configs/pose3d/MB_ft_h36m.yaml)     | 37.2mm (MPJPE)   |
-| Action Recognition (x-sub, ft)  | [OneDrive](https://1drv.ms/f/s!AvAdh0LSjEOlgTX23yT_NO7RiZz-?e=nX6w2j) | [action/MB_ft_NTU60_xsub.yaml](configs/action/MB_ft_NTU60_xsub.yaml) | 97.2% (Top1 Acc) |
-| Action Recognition (x-view, ft) | [OneDrive](https://1drv.ms/f/s!AvAdh0LSjEOlgTaNiXw2Nal-g37M?e=lSkE4T) | [action/MB_ft_NTU60_xview.yaml](configs/action/MB_ft_NTU60_xview.yaml) | 93.0% (Top1 Acc) |
-| Mesh (with 3DPW, ft)            | [OneDrive](https://1drv.ms/f/s!AvAdh0LSjEOlgTmgYNslCDWMNQi9?e=WjcB1F) | [mesh/MB_ft_pw3d.yaml](configs/mesh/MB_ft_pw3d.yaml)              | 88.1mm (MPVE)    |
-
-In most use cases (especially with finetuning), `MotionBERT-Lite` gives a similar performance with lower computation overhead. 
-
-
-
+## Inference
+Please follow [MotionBert](https://github.com/Walter0807/MotionBERT) to prepare the files required for inference. 
+Then run:
+``` bash
+python infer_wild_mesh.py --vid_path example/a4/a4.mp4 --json_path example/a4/alphapose-a4.json --out_path example/a4/output --clip_len 16
+```
 
 ## Citation
 
