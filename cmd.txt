@@ -1,0 +1,72 @@
+(tcmr_new) 
+
+python train_mesh.py --config configs/mesh/DM_ft_pw3d.yaml --pretrained checkpoint/pretrain/MB_release --checkpoint checkpoint/mesh/FT_DM_release_DM_ft_pw3d
+
+python train_mesh.py --config configs/mesh/DM_ft_h36m.yaml --pretrained checkpoint/pretrain/MB_release --checkpoint checkpoint/mesh/FT_DM_release_DM_ft_h36m
+
+python train_mesh_refine.py \
+--config configs/mesh/DM_ft_pw3d_refine_hybrik.yaml \
+--pretrained checkpoint/pretrain/MB_release \
+--checkpoint checkpoint/mesh/FT_DM_release_DM_ft_pw3d_refine_hybrik
+
+python train_mesh_refine_load.py \
+--config configs/mesh/DM_ft_h36m_refine_hybrik.yaml \
+--pretrained checkpoint/pretrain/MB_release \
+--checkpoint checkpoint/mesh/FT_DM_release_DM_ft_h36m_refine_hybrik
+
+#### load 
+python train_mesh_load.py --config configs/mesh/DM_ft_h36m.yaml --pretrained checkpoint/pretrain/MB_release \--checkpoint checkpoint/mesh/FT_DM_release_DM_ft_h36m
+
+python train_mesh_refine_load.py \
+--config configs/mesh/DM_ft_h36m_refine_hybrik.yaml \
+--pretrained checkpoint/pretrain/MB_release \
+--checkpoint checkpoint/mesh/FT_DM_release_DM_ft_h36m_refine_hybrik
+
+#####  test:
+python train_mesh.py \
+--config configs/mesh/DM_ft_pw3d.yaml \
+--evaluate checkpoint/mesh/FT_DM_release_DM_ft_pw3d/best_epoch.bin 
+
+python train_mesh_refine.py \
+--config configs/mesh/DM_ft_pw3d_refine_hybrik.yaml \
+--evaluate checkpoint/mesh/FT_DM_release_DM_ft_pw3d_refine_hybrik/best_epoch.bin
+
+##############acc_ test
+python train_mesh_acc.py --config configs/mesh/DM_ft_pw3d.yaml --evaluate checkpoint/best/pw3d/best_epoch.bin 
+
+python train_mesh_refine_acc.py --config configs/mesh/DM_ft_pw3d_refine_hybrik.yaml --evaluate checkpoint/best/pw3d_refine/best_epoch.bin
+
+For demo visualization: 
+First go to 3dhpe/alphapose
+
+conda activate alphapose
+
+python scripts/demo_inference.py --cfg configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml --checkpoint pretrained_models/halpe26_fast_res50_256x192.pth --video examples/demo/d6.mp4 --outdir examples/res --save_video
+
+Then run motionbert with tcmr_new
+
+python infer_wild_mesh.py \
+--vid_path example/kunkun.mp4 \
+--json_path example/kunkun-results.json \
+--out_path example/output \
+--ref_3d_motion_path <3d-pose-results.npy> # Optional, use the estimated 3D motion for root trajectory.
+
+######################################
+python infer_wild.py --vid_path example/a4/a4.mp4 --json_path example/a4/alphapose-a4.json --out_path example/a4/output
+
+python infer_wild_mesh.py --vid_path example/a4/a4.mp4 --json_path example/a4/alphapose-a4.json --out_path example/a4/output --clip_len 16 --ref_3d_motion_path example/a4/output/X3D.npy
+##############################
+python infer_wild_mesh.py --vid_path example/a4/a4.mp4 --json_path example/a4/alphapose-a4.json --out_path example/a4/output --clip_len 16
+
+
+############### change color ###
+python infer_wild_mesh_MB.py --vid_path example/d6/d6.mp4 --json_path example/d6/alphapose-d6.json --out_path example/d6/MB_output --clip_len 16
+########################## MB
+python train_mesh_MB.py --config configs/mesh/MB_ft_pw3d.yaml --pretrained checkpoint/pretrain/MB_release --checkpoint checkpoint/mesh/FT_MB_release_MB_ft_pw3d
+
+python train_mesh_MB.py --config configs/mesh/MB_ft_h36m.yaml --pretrained checkpoint/pretrain/MB_release --checkpoint checkpoint/mesh/FT_MB_release_MB_ft_h36m
+
+python train_mesh_MB_refine.py \
+--config configs/mesh/MB_ft_pw3d_refine_hybrik.yaml \
+--pretrained checkpoint/pretrain/MB_release \
+--checkpoint checkpoint/mesh/FT_MB_release_MB_ft_pw3d_refine_hybrik
