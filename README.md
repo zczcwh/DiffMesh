@@ -21,8 +21,8 @@ pip install -r requirements.txt
 
 ## Download checkpoints
 
-* Download our 3DPW model from [ [Google Drive](https://drive.google.com/drive/folders/1-JAfvUEuxJMCpku3Fkf9fRYR_h1N_o1P?usp=sharing)].
-* Download our 3DPW_with_refinement demo model from [ [Google Drive](https://drive.google.com/drive/folders/1FdAvvi5cMROisgnVYRtlNMVtAkpHfRWD?usp=sharing)].
+* Download our 3DPW checkpoint from [ [Google Drive](https://drive.google.com/drive/folders/1-JAfvUEuxJMCpku3Fkf9fRYR_h1N_o1P?usp=sharing)].
+* Download our 3DPW_with_refinement checkpoint from [ [Google Drive](https://drive.google.com/drive/folders/1FdAvvi5cMROisgnVYRtlNMVtAkpHfRWD?usp=sharing)].
   
 ## Testing 
 First, put the checkpoints in the correct directory. 
